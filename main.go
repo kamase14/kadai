@@ -35,9 +35,15 @@ func main() {
         w.Header().Set("Content-Type", "application/json")
         fmt.Fprintln(w, string(json_message))
     })
+
+    port := os.Getenv("PORT")
+    if port == "" {
+      port = "8080"
+    }
+
     n := negroni.Classic()
     n.UseHandler(mux)
-    n.Run(":"+os.Args[1])
+    n.Run(":"+port)
 }
 
 func return_message() *Fed_json{
